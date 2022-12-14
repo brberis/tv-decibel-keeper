@@ -1,0 +1,5 @@
+audio:
+    chunk:      1024 * 4
+    format:     pyaudio.paInt16
+    channels:   1
+    rate:       44100
