@@ -2,6 +2,14 @@ import time
 import audioop
 import math
 import pyaudio
+from sonybraviaremote import TV, TVConfig
+
+def on_auth():
+    return input('Pincode: ')
+
+config = TVConfig('192.168.50.226', 'Bravia')
+tv = TV.connect(config, on_auth)
+
 # with open('config.yml', 'r') as ymlfile:
 #     CFG = yaml.load(ymlfile, Loader=yaml.SafeLoader)
     
@@ -65,7 +73,13 @@ while not done:
     i += 1
     if i == 30:
         i = 0
-        print('THE AVERAGE ' + str(sm / 30 ))
+        average = sm / 30
+        print('THE AVERAGE ' + str(average))
+        if average > 40:
+          tv.volume_down()
+        if average < 35:
+          tv.volume_up()
+
         sm = 0
         
     time.sleep(.005)
