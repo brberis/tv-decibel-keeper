@@ -71,13 +71,13 @@ while not done:
 
     sm = (sm + float(db))     
     i += 1
-    if i == 30:
+    if i == 60:
         i = 0
-        average = sm / 30
+        average = sm / 60
         print('THE AVERAGE ' + str(average))
-        if average > 40:
+        if average > 50:
           tv.volume_down()
-        if average < 35:
+        if average < 45:
           tv.volume_up()
 
         sm = 0
