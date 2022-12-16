@@ -34,7 +34,6 @@ avg = 0
 max_db = 0
 
 def ag_samples(sample):
-    ''' collect samples and average if needed. '''
     global ac
     global samples
     global avg
@@ -67,7 +66,7 @@ while not done:
 
     db = ag_samples(total)
 
-    print(db)
+    # print(db)
 
     sm = (sm + float(db))     
     i += 1
@@ -75,10 +74,16 @@ while not done:
         i = 0
         average = sm / 60
         print('THE AVERAGE ' + str(average))
-        if average > 50:
-          tv.volume_down()
-        if average < 45:
-          tv.volume_up()
+        if average > 40:
+            print('HIT UP LIMIT')
+
+            tv.volume_down(100)
+            tv.volume_up(17)
+        # if average < 35:
+        #     pass
+            # tv.volume_down(1)
+            # tv.volume_up()
+            # tv.volume_up()
 
         sm = 0
         
