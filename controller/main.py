@@ -2,6 +2,8 @@ import time
 import audioop
 import math
 import pyaudio
+import yaml
+
 from sonybraviaremote import TV, TVConfig
 
 def on_auth():
@@ -10,8 +12,8 @@ def on_auth():
 config = TVConfig('192.168.50.226', 'Bravia')
 tv = TV.connect(config, on_auth)
 
-# with open('config.yml', 'r') as ymlfile:
-#     CFG = yaml.load(ymlfile, Loader=yaml.SafeLoader)
+with open('../config.yml', 'r') as ymlfile:
+    CFG = yaml.load(ymlfile, Loader=yaml.SafeLoader)
     
 CHUNK = 1024 * 4
 FORMAT = pyaudio.paInt16 #CFG['audio']['format']
@@ -70,20 +72,14 @@ while not done:
 
     sm = (sm + float(db))     
     i += 1
-    if i == 60:
+    if i == CFG['audio']['interval']:
         i = 0
-        average = sm / 60
+        average = sm / CFG['audio']['interval']
         print('THE AVERAGE ' + str(average))
-        if average > 40:
+        if average > CFG['audio']['max_average']:
             print('HIT UP LIMIT')
-
             tv.volume_down(100)
-            tv.volume_up(17)
-        # if average < 35:
-        #     pass
-            # tv.volume_down(1)
-            # tv.volume_up()
-            # tv.volume_up()
+            tv.volume_up(CFG['audio']['default_vol'])
 
         sm = 0
         
